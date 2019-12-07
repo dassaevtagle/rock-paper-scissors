@@ -70,3 +70,12 @@ html {
       background-color: black;
       color: white;
   }
+
+  #github{
+      color: white;
+      text-decoration: none;
+  }
+  #github:visited{
+      color: white;
+      text-decoration: none;
+  }
