@@ -2,75 +2,164 @@
 <html>
  <head>
      <link rel="stylesheet" href="styles.css">
+     <link href="https://fonts.googleapis.com/css?family=Tomorrow&display=swap" rel="stylesheet"> 
      <title>Rock, Papers, Scissors</title>
  </head>
  <body>
-     <button id='rock' onclick='playRound(rock.innerHTML)'class='pSelection' type='button'>rock</button>
-     <button id='paper'onclick='playRound(paper.innerHTML)'class='pSelection' type='button'>paper</button>
-     <button id='scissors'onclick='playRound(scissors.innerHTML)' class='pSelection' type='button'>scissors</button>
+     <header class='header'>
+         <h1>Rock Paper Scissors</h1>
+     </header>
+     <div class='options'>
+        <button id='rock' onclick='playRound(rock.innerHTML)'class='pSelection' type='button'>Rock</button>
+        <button id='paper'onclick='playRound(paper.innerHTML)'class='pSelection' type='button'>Paper</button>
+        <button id='scissors'onclick='playRound(scissors.innerHTML)' class='pSelection' type='button'>Scissors</button>
+     </div>
+     <div class='images'>
+         <img id='userHand' src='rock-left.png' width="260"
+            height="260">
+         <img id='computerHand' src="rock-right.png" width="260"
+            height="260">
+     </div>
+     <h3 class='message'></h3>
+     <div class='scoreBoard'>
+         <h1 id='userScore'>0</h1>
+         <div id='user'><h1>YOU</h1></div>
+         <h1 id='computerScore'>0</h1>
+         <div id='computer'><h1>COMPUTER</h1></div>
+     </div>
      <script>
-        var computerScore = 0;
-        var userScore = 0;
         
-    
 
+        var computerScore = document.querySelector('#computerScore');
+        var userScore = document.querySelector('#userScore');
 
-        
          const rock = document.querySelector('#rock'); //calls the buttons individually
          const paper = document.querySelector('#paper');
          const scissors = document.querySelector('#scissors');
-         var buttons = document.querySelectorAll('.pSelection');//Calls ALL the buttons (player selection)
+        
+         var message = document.querySelector('.message');
 
          function playRound(playerSelection){ // compares values.
          var myArray = ['rock', 'paper', 'scissors']; 
          var computerSelection = myArray[Math.random() * myArray.length | 0]; // gets a random value out of RPS. 
-         var playCapitalized = computerSelection.charAt(0).toUpperCase() + computerSelection.slice(1); 
+         var playCapitalized = computerSelection.charAt(0).toUpperCase() + computerSelection.slice(1);//Capitalizes computerScore 
          
          var draw = "Computer chose: " + playCapitalized + ". It's a draw."+ " " ;
          var lose = "Computer chose: " + playCapitalized + ". You've lost!" + " ";
          var win = "Computer chose: " + playCapitalized + ". You've won!" + " "; 
+         
+         var handUser = [
+             'rock-left.png',
+             'paper-left.png',
+             'scissors-left.png'
+         ];
 
+         var handComputer = [
+             'rock-right.png',
+             'paper-right.png',
+             'scissors-right.png'
+         ]
+         // array from user and computer hand positions
+
+         function changeHands (selection,player){
+            var userImage = document.getElementById('userHand');
+            var computerImage= document.getElementById('computerHand');
+            
+            if (player == 'user'){
+                switch (selection) {
+                case 'rock':
+                userImage.src = handUser[0];
+                break;
+                case 'paper':
+                userImage.src = handUser[1];
+                break;
+                case 'scissors':
+                userImage.src = handUser[2];
+                break;
+              }
+            }
+
+            else if (player == 'computer') {
+                switch (selection) {
+                case 'rock':
+                computerImage.src = handComputer[0];
+                break;
+                case 'paper':
+                computerImage.src = handComputer[1];
+                break;
+                case 'scissors':
+                computerImage.src = handComputer[2];
+                break;
+             }
+            }
+        }
+         playerSelection = playerSelection.toLowerCase();//converts HTML text compatible with function (lowerCase)
+           
             if (playerSelection == 'rock') {
                 if (computerSelection == 'rock'){
-                     result = draw + "Computer: " + computerScore + ' ' + 'You: ' + userScore ;
+                     result = draw;
+                     changeHands('rock', 'computer');
+                     changeHands('rock', 'user');
                 }
                 else if (computerSelection == 'paper') {  
-                   result = lose + "Computer: " + (++computerScore) + ' ' + 'You: ' + userScore ;
+                   result = lose;
+                   computerScore.innerHTML++;
+                   changeHands('paper', 'computer');
+                   changeHands('rock', 'user');
                 }
                 else {
-                   result = win + "Computer: " + computerScore + ' ' + 'You: ' + (++userScore);
+                   result = win;
+                   userScore.innerHTML++;
+                   changeHands('scissors', 'computer');
+                   changeHands('rock', 'user');
                 }
-                alert(result);
+                message.innerHTML = result;
              }
 
             else if (playerSelection == 'paper') {
                     if (computerSelection == 'paper'){
-                      result = draw + "Computer: " + computerScore + ' ' + 'You: ' + userScore ;
+                      result = draw;
+                      changeHands('paper', 'computer');
+                      changeHands('paper', 'user');
                     }
                 else if (computerSelection == 'scissors') {
-                     result = lose + "Computer: " + (++computerScore) + ' ' + 'You: ' + userScore ;
+                     result = lose;
+                     computerScore.innerHTML++;
+                     changeHands('scissors', 'computer');
+                     changeHands('paper', 'user');
                     }
                 else {
-                      result = win + "Computer: " + computerScore + ' ' + 'You: ' + (++userScore);
+                      result = win;
+                      userScore.innerHTML++;
+                      changeHands('rock', 'computer');
+                      changeHands('paper', 'user');
                 }
-                 alert(result);
+                 message.innerHTML = result;
                 }
             
             else if (playerSelection == 'scissors') {
                 if (computerSelection == 'scissors') {
-                    result = draw + "Computer: " + computerScore + ' ' + 'You: ' + userScore ;
+                    result = draw;
+                    changeHands('scissors', 'computer');
+                    changeHands('scissors', 'user');
                     }
                 else if (computerSelection == 'rock') {    
-                     result = lose + "Computer: " + (++computerScore) + ' ' + 'You: ' + userScore ;
+                     result = lose;
+                     computerScore.innerHTML++;
+                     changeHands('rock', 'computer');
+                     changeHands('scissors', 'user');
                 }
                 else {
-                      result = win + "Computer: " + computerScore + ' ' + 'You: ' + (++userScore);
+                      result = win;
+                      userScore.innerHTML++;
+                      changeHands('paper', 'computer');
+                      changeHands('scissors', 'user');
                 }
-                 alert(result);
+                 message.innerHTML = result;
               }
             
             else {
-                alert("That's not a valid option. Choose Rock, Paper or Scissors.");
+
             }
            } 
           
