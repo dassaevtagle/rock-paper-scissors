@@ -6,32 +6,36 @@
      <title>Rock, Papers, Scissors</title>
  </head>
  <body>
-     <header class='header'>
-         <h1>Rock Paper Scissors</h1>
-     </header>
+     <p class='message'>Let's play!</p>
+     <div class='images'>
+         <div class='box'>
+         <h1 class='score user' id='userScore'>0</h1>
+         <div class='score user' id='user'><h1>YOU</h1></div>
+        </div>
+        <div class='box'>
+         <img id='userHand' src='rock-left.png' width="260"
+            height="260">
+        </div>
+        <div class='box'>
+         <img id='computerHand' src="rock-right.png" width="260"
+            height="260">
+        </div>
+        <div class='box'>
+         <h1 class='score computer' id='computerScore'>0</h1>
+         <div class='score computer' id='computer'><h1>COMPUTER</h1></div>
+        </div>
+        </div>
      <div class='options'>
         <button id='rock' onclick='playRound(rock.innerHTML)'class='pSelection' type='button'>Rock</button>
         <button id='paper'onclick='playRound(paper.innerHTML)'class='pSelection' type='button'>Paper</button>
         <button id='scissors'onclick='playRound(scissors.innerHTML)' class='pSelection' type='button'>Scissors</button>
      </div>
-     <div class='images'>
-         <img id='userHand' src='rock-left.png' width="260"
-            height="260">
-         <img id='computerHand' src="rock-right.png" width="260"
-            height="260">
-     </div>
-     <h3 class='message'></h3>
-     <div class='scoreBoard'>
-         <h1 id='userScore'>0</h1>
-         <div id='user'><h1>YOU</h1></div>
-         <h1 id='computerScore'>0</h1>
-         <div id='computer'><h1>COMPUTER</h1></div>
-     </div>
+     <footer>Created by Dassaev Tagle</footer>
      <script>
         
 
-        var computerScore = document.querySelector('#computerScore');
-        var userScore = document.querySelector('#userScore');
+         var computerScore = document.querySelector('#computerScore');
+         var userScore = document.querySelector('#userScore');
 
          const rock = document.querySelector('#rock'); //calls the buttons individually
          const paper = document.querySelector('#paper');
@@ -44,9 +48,9 @@
          var computerSelection = myArray[Math.random() * myArray.length | 0]; // gets a random value out of RPS. 
          var playCapitalized = computerSelection.charAt(0).toUpperCase() + computerSelection.slice(1);//Capitalizes computerScore 
          
-         var draw = "Computer chose: " + playCapitalized + ". It's a draw."+ " " ;
-         var lose = "Computer chose: " + playCapitalized + ". You've lost!" + " ";
-         var win = "Computer chose: " + playCapitalized + ". You've won!" + " "; 
+         var draw = 'DRAW';
+         var lose = 'COMPUTER WINS';
+         var win = 'YOU WIN'; 
          
          var handUser = [
              'rock-left.png',
@@ -61,6 +65,7 @@
          ]
          // array from user and computer hand positions
 
+        // function that changes the images
          function changeHands (selection,player){
             var userImage = document.getElementById('userHand');
             var computerImage= document.getElementById('computerHand');
@@ -100,18 +105,21 @@
                      result = draw;
                      changeHands('rock', 'computer');
                      changeHands('rock', 'user');
+                     message.style.color = 'white';
                 }
                 else if (computerSelection == 'paper') {  
                    result = lose;
                    computerScore.innerHTML++;
                    changeHands('paper', 'computer');
                    changeHands('rock', 'user');
+                   message.style.color = '#FF1A1A';
                 }
                 else {
                    result = win;
                    userScore.innerHTML++;
                    changeHands('scissors', 'computer');
                    changeHands('rock', 'user');
+                   message.style.color = 'green';
                 }
                 message.innerHTML = result;
              }
@@ -121,18 +129,21 @@
                       result = draw;
                       changeHands('paper', 'computer');
                       changeHands('paper', 'user');
+                      message.style.color = 'white';
                     }
                 else if (computerSelection == 'scissors') {
                      result = lose;
                      computerScore.innerHTML++;
                      changeHands('scissors', 'computer');
                      changeHands('paper', 'user');
+                     message.style.color = '#FF1A1A';
                     }
                 else {
                       result = win;
                       userScore.innerHTML++;
                       changeHands('rock', 'computer');
                       changeHands('paper', 'user');
+                      message.style.color = 'green';
                 }
                  message.innerHTML = result;
                 }
@@ -142,18 +153,21 @@
                     result = draw;
                     changeHands('scissors', 'computer');
                     changeHands('scissors', 'user');
+                    message.style.color = 'white';
                     }
                 else if (computerSelection == 'rock') {    
                      result = lose;
                      computerScore.innerHTML++;
                      changeHands('rock', 'computer');
                      changeHands('scissors', 'user');
+                     message.style.color = '#FF1A1A';
                 }
                 else {
                       result = win;
                       userScore.innerHTML++;
                       changeHands('paper', 'computer');
                       changeHands('scissors', 'user');
+                      message.style.color = 'green';
                 }
                  message.innerHTML = result;
               }
@@ -162,11 +176,6 @@
 
             }
            } 
-          
-
-
-
-           
      </script>
  </body>
 </html>
